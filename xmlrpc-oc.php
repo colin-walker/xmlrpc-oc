@@ -18,7 +18,13 @@
 	*/
 	
 	
-	add_filter( 'wp_insert_post_data', 'open_comments', '100', 1 );
+	add_action ('xmlrpc_call', 'check_new_post' );
+
+	function check_new_post( $method ) {
+    		if( 'wp.newPost' === $method ) {
+        		add_filter( 'wp_insert_post_data', 'open_comments', 100, 1 );
+		}
+	}
 
 	function open_comments ($postarr) {
 		$postarr[comment_status] = 'open';
