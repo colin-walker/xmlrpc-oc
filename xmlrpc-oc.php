@@ -21,7 +21,8 @@
 	add_action ('xmlrpc_call', 'check_new_post' );
 
 	function check_new_post( $method ) {
-    		if( 'wp.newPost' === $method ) {
+		$dcs = get_default_comment_status();
+    		if(( 'wp.newPost' === $method ) && ($dcs == 'open')) {
         		add_filter( 'wp_insert_post_data', 'open_comments', 100, 1 );
 		}
 	}
